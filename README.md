@@ -15,4 +15,4 @@ This code is written in terraform to setup an infrastructure in aws
 public IP assigned to the database server.Webserver can communicate with the Database server using the private IP
 6) Create a bastion server in the public subnet to provide inbound traffic
 
-############ Then initialize terraform "$terraform init" and run the code "$terraform apply"
+###### Then initialize terraform "$terraform init" and run the code "$terraform apply" #########
