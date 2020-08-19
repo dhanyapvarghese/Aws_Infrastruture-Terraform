@@ -93,3 +93,61 @@ resource "aws_nat_gateway" "blog" {
     Name = "blog-nat"
   }
 }
+###########################################################
+#Route table public
+###########################################################
+
+resource "aws_route_table" "terraform-public" {
+  vpc_id = aws_vpc.blog.id
+
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_internet_gateway.igw.id
+  }
+
+  tags = {
+    Name = "terraform_public"
+  }
+}
+###########################################################
+#Route table private
+###########################################################
+
+resource "aws_route_table" "terraform-private" {
+  vpc_id = aws_vpc.blog.id
+
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_nat_gateway.blog.id
+  }
+
+  tags = {
+    Name = "terraform_private"
+  }
+}
+###########################################################
+# route association blog-public1
+###########################################################
+
+resource "aws_route_table_association" "blog-public-1" {
+  subnet_id         = aws_subnet.public1.id
+  route_table_id = aws_route_table.terraform-public.id
+}
+
+###########################################################
+# route association blog-public2
+###########################################################
+
+resource "aws_route_table_association" "blog-public-2" {
+  subnet_id         = aws_subnet.public2.id
+  route_table_id = aws_route_table.terraform-public.id
+}
+
+###########################################################
+# route association blog-private1
+###########################################################
+
+resource "aws_route_table_association" "blog-private-1" {
+  subnet_id         = aws_subnet.private1.id
+  route_table_id = aws_route_table.terraform-public.id
+}
