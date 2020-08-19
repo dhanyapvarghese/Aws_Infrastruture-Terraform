@@ -61,3 +61,35 @@ resource "aws_subnet" "private1" {
   }
 }
 
+###########################################################
+#Internet gateway
+###########################################################
+
+resource "aws_internet_gateway" "igw" {
+  vpc_id = aws_vpc.blog.id
+
+  tags = {
+    Name = "blog"
+  }
+}
+###########################################################
+#Elastic ip
+###########################################################
+
+resource "aws_eip" "nat" {
+  vpc      = true
+  tags = {
+    Name = "blog-nat"
+  }
+}
+###########################################################
+#Natgate way
+###########################################################
+
+resource "aws_nat_gateway" "blog" {
+  allocation_id = aws_eip.nat.id
+  subnet_id     = aws_subnet.public2.id
+  tags = {
+    Name = "blog-nat"
+  }
+}
