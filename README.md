@@ -12,7 +12,7 @@ This code is written in terraform to setup an infrastructure in aws
 3) Create an elastic IP for the nat gateway and associate it with the created nat gateway. 
 4) Then create 2 ec2 instance. First one will be the webserver which will be created under the public subnet.
 5) The next one will be database server which will create under private subnet. 
-### NB: Creating in private subnet these two instances can communicate each other but no other servers can communicate with the database from outside since there won't be any      
-### public IP assigned to the database server.Webserver can communicate with the Database server using the private IP
+NB: Creating in private subnet these two instances can communicate each other but no other servers can communicate with the database from outside since there won't be any      
+public IP assigned to the database server.Webserver can communicate with the Database server using the private IP
 6) Create a bastion server in the public subnet to provide inbound traffic
 
